@@ -4,6 +4,7 @@ import com.example.demo.data.DependentVO;
 import com.example.demo.data.DependentWebDataVO;
 import com.example.demo.data.ResponsibleVO;
 import com.example.demo.services.MixedServices;
+import com.example.demo.services.ResponsibleServices;
 import com.example.demo.util.MediaType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,16 +17,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.logging.Logger;
+
 @RestController
-@RequestMapping("/api/responsiblesAndDependents/")
+@RequestMapping("/api/responsiblesAndDependents")
 @Tag(name = "Responsible and Dependent", description = "Endpoints for Managing Responsibles and Dependents")
 public class MixedController {
+
+    private Logger logger = Logger.getLogger(ResponsibleServices.class.getName());
 
     @Autowired
     private MixedServices service;
 
     @GetMapping(
-            value = "/params",
+            value = "/commonuser/params",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML}
     )
     @Operation(summary = "Finds a Dependent", description = "Finds a Dependent",
@@ -45,7 +50,7 @@ public class MixedController {
     }
 
     @GetMapping(
-            value = "/webdata/params",
+            value = "/commonuser/webdata/params",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML}
     )
     @Operation(summary = "Finds a Dependent", description = "Finds a Dependent",

@@ -29,6 +29,41 @@ public class SecurityConfig {
     private JwtTokenProvider tokenProvider;
 
     @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        JwtTokenFilter customFilter = new JwtTokenFilter(tokenProvider);
+
+        return http
+                .httpBasic(basic -> basic.disable())
+                .csrf(csrf -> csrf.disable())
+                .addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(
+                        authorizeHttpRequests -> authorizeHttpRequests
+                                .requestMatchers(
+                                        "/api/dependents/admin/**",
+                                        "/api/responsiblesAndDependents/admin/**",
+                                        "/api/responsibles/admin/**").hasRole("ADMIN")
+                                .requestMatchers(
+                                        "/api/dependents/manager/**",
+                                        "/api/responsiblesAndDependents/manager/**",
+                                        "/api/responsibles/manager/**").hasAnyRole("MANAGER", "ADMIN")
+                                .requestMatchers(
+                                        "/api/dependents/commonuser/**",
+                                        "/api/responsiblesAndDependents/commonuser/**",
+                                        "/api/responsibles/commonuser/**").hasAnyRole("COMMON_USER", "MANAGER", "ADMIN")
+                                .requestMatchers(
+                                        "/auth/signin",
+                                        "/auth/register",
+                                        "/auth/refreshToken/**"
+                                ).permitAll()
+                                .requestMatchers("/api/**").authenticated()
+                )
+                .cors(cors -> {
+                })
+                .build();
+    }
+
+    @Bean
     public PasswordEncoder passwordEncoder() {
         Map<String, PasswordEncoder> encoders = new HashMap<>();
 
@@ -46,29 +81,5 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        JwtTokenFilter customFilter = new JwtTokenFilter(tokenProvider);
-
-        return http
-                .httpBasic(basic -> basic.disable())
-                .csrf(csrf -> csrf.disable())
-                .addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(
-                        authorizeHttpRequests -> authorizeHttpRequests
-                                .requestMatchers(
-                                        "/auth/signin",
-                                        "/auth/refresh/**",
-                                        "/swagger-ui/**",
-                                        "/v3/api-docs/**").permitAll()
-                                .requestMatchers("/api/**").authenticated()
-                                .requestMatchers("/users").denyAll()
-                )
-                .cors(cors -> {
-                })
-                .build();
     }
 }

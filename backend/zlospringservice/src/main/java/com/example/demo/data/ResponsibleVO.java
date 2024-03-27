@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -27,7 +28,6 @@ public class ResponsibleVO extends RepresentationModel<ResponsibleVO> implements
     private String emailRes;
     private Integer enderecoIdRes;
     private String rgRes;
-
     private String senhaRes;
 
     public ResponsibleVO() {
@@ -124,13 +124,14 @@ public class ResponsibleVO extends RepresentationModel<ResponsibleVO> implements
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ResponsibleVO that)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        return Objects.equals(getKey(), that.getKey()) && Objects.equals(getNomeRes(), that.getNomeRes()) && Objects.equals(getIdadeRes(), that.getIdadeRes()) && Objects.equals(getContato1Res(), that.getContato1Res()) && Objects.equals(getContato2Res(), that.getContato2Res()) && Objects.equals(getContato3Res(), that.getContato3Res()) && Objects.equals(getPlanoAssinado(), that.getPlanoAssinado()) && Objects.equals(getEmailRes(), that.getEmailRes()) && Objects.equals(getEnderecoIdRes(), that.getEnderecoIdRes()) && Objects.equals(getRgRes(), that.getRgRes()) && Objects.equals(getSenhaRes(), that.getSenhaRes());
+        ResponsibleVO that = (ResponsibleVO) o;
+        return Objects.equals(key, that.key) && Objects.equals(nomeRes, that.nomeRes) && Objects.equals(idadeRes, that.idadeRes) && Objects.equals(contato1Res, that.contato1Res) && Objects.equals(contato2Res, that.contato2Res) && Objects.equals(contato3Res, that.contato3Res) && Objects.equals(planoAssinado, that.planoAssinado) && Objects.equals(emailRes, that.emailRes) && Objects.equals(enderecoIdRes, that.enderecoIdRes) && Objects.equals(rgRes, that.rgRes) && Objects.equals(senhaRes, that.senhaRes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getKey(), getNomeRes(), getIdadeRes(), getContato1Res(), getContato2Res(), getContato3Res(), getPlanoAssinado(), getEmailRes(), getEnderecoIdRes(), getRgRes(), getSenhaRes());
+        return Objects.hash(super.hashCode(), key, nomeRes, idadeRes, contato1Res, contato2Res, contato3Res, planoAssinado, emailRes, enderecoIdRes, rgRes, senhaRes);
     }
 }

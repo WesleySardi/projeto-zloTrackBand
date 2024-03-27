@@ -1,7 +1,9 @@
 package com.example.demo.services;
 
+import com.example.demo.data.UserVO;
 import com.example.demo.data.security.AccountCredentialsVO;
 import com.example.demo.data.security.TokenVO;
+import com.example.demo.model.User;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.security.jwt.JwtTokenProvider;
 
@@ -12,6 +14,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class AuthServices {
@@ -24,6 +27,13 @@ public class AuthServices {
 
     @Autowired
     private UserRepository repository;
+
+    public User register(@RequestBody User newUser) {
+
+        repository.save(newUser);
+
+        return newUser;
+    }
 
     @SuppressWarnings("rawtypes")
     public ResponseEntity signin(AccountCredentialsVO data) {

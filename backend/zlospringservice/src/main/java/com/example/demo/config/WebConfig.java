@@ -1,6 +1,5 @@
 package com.example.demo.config;
 
-import com.example.demo.filters.TokenRateLimitFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -38,14 +37,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .mediaType("json", MediaType.APPLICATION_JSON)
                 .mediaType("xml", MediaType.APPLICATION_XML)
                 .mediaType("x-yaml", MEDIA_TYPE_APPLICATION_YML);
-    }
-
-    @Bean
-    public FilterRegistrationBean<TokenRateLimitFilter> rateLimitFilter() {
-        FilterRegistrationBean<TokenRateLimitFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new TokenRateLimitFilter());
-        registrationBean.addUrlPatterns("/api/*");  // Aplica o filtro a todos os endpoints
-        return registrationBean;
     }
 }
 

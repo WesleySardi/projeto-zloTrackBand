@@ -19,16 +19,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("/api/responsibles/")
+@RequestMapping("/api/responsibles")
 @Tag(name = "Responsible", description = "Endpoints for Managing Responsibles")
 public class ResponsibleController {
+
+    private Logger logger = Logger.getLogger(ResponsibleServices.class.getName());
 
     @Autowired
     private ResponsibleServices service;
 
-    @GetMapping(produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+    @GetMapping(
+            value = "/commonuser/findAll",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
     @Operation(summary = "Finds all Responsibles", description = "Finds all Responsibles",
             tags = {"Responsibles"},
             responses = {
@@ -57,7 +62,9 @@ public class ResponsibleController {
         return ResponseEntity.ok(service.findAll(pageable));
     }
 
-    @GetMapping(value = "/findResponsiblesByName/{nomeRes}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+    @GetMapping(
+            value = "/commonuser/findResponsiblesByName/{nomeRes}",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
     @Operation(summary = "Finds Responsibles by Name", description = "Finds Responsibles by Name",
             tags = {"Responsibles"},
             responses = {
@@ -87,7 +94,9 @@ public class ResponsibleController {
         return ResponseEntity.ok(service.findResponsiblesByName(nomeRes, pageable));
     }
 
-    @GetMapping(value = "/findResponsiblesCpfAndName/params", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+    @GetMapping(
+            value = "/commonuser/findResponsiblesCpfAndName/params",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
     @Operation(summary = "Finds Responsibles by Email and Password", description = "Finds Responsibles by Email and Password",
             tags = {"Responsible"},
             responses = {
@@ -112,7 +121,7 @@ public class ResponsibleController {
     }
 
     @GetMapping(
-            value = "/{id}",
+            value = "/commonuser/findById/{id}",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML}
     )
     @Operation(summary = "Finds a Responsible", description = "Finds a Responsible",
@@ -132,6 +141,7 @@ public class ResponsibleController {
     }
 
     @PostMapping(
+            value = "/commonuser/create",
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
     @Operation(summary = "Adds a new Responsible", description = "Adds a new Responsible by passing in a JSON, XML or YML representation of the Responsible!",
@@ -149,6 +159,7 @@ public class ResponsibleController {
     }
 
     @PutMapping(
+            value = "/commonuser/update",
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
     @Operation(summary = "Updates a Responsible", description = "Updates a Responsible by passing in a JSON, XML or YML representation of the Responsible!",
@@ -166,7 +177,7 @@ public class ResponsibleController {
         return service.update(responsibleVO);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/commonuser/delete/{id}")
     @Operation(summary = "Deletes a Responsible", description = "Deletes a Responsible by passing in a JSON, XML or YML representation of the Responsible!",
             tags = {"Responsibles"},
             responses = {

@@ -9,6 +9,7 @@ import org.springframework.hateoas.RepresentationModel;
 import java.io.Serial;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 
 @JsonPropertyOrder({"smsCode", "sendDate", "returnDate", "cpfDep"})

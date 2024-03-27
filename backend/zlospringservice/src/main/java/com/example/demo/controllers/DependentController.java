@@ -20,16 +20,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("/api/dependents/")
+@RequestMapping("/api/dependents")
 @Tag(name = "Dependent", description = "Endpoints for Managing Dependents")
 public class DependentController {
+
+    private Logger logger = Logger.getLogger(DependentServices.class.getName());
 
     @Autowired
     private DependentServices service;
 
-    @GetMapping(produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+    @GetMapping(
+            value = "/commonuser/findAll",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
     @Operation(summary = "Finds all Dependents", description = "Finds all Dependents",
             tags = {"Dependents"},
             responses = {
@@ -58,7 +63,9 @@ public class DependentController {
         return ResponseEntity.ok(service.findAll(pageable));
     }
 
-    @GetMapping(value = "/findDependentsByName/{nomeDep}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+    @GetMapping(
+            value = "/commonuser/findDependentsByName/{nomeDep}",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
     @Operation(summary = "Finds Dependents by Name", description = "Finds Dependents by Name",
             tags = {"Dependents"},
             responses = {
@@ -88,7 +95,9 @@ public class DependentController {
         return ResponseEntity.ok(service.findDependentsByName(nomeDep, pageable));
     }
 
-    @GetMapping(value = "/findDependentsByCpfRes/{cpfRes}", produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+    @GetMapping(
+            value = "/commonuser/findDependentsByCpfRes/{cpfRes}",
+            produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
     @Operation(summary = "Finds Dependents by CpfRes", description = "Finds Dependents by CpfRes",
             tags = {"Dependents"},
             responses = {
@@ -119,7 +128,7 @@ public class DependentController {
     }
 
     @GetMapping(
-            value = "/{id}",
+            value = "/commonuser/findById/{id}",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML}
     )
     @Operation(summary = "Finds a Dependent", description = "Finds a Dependent",
@@ -139,7 +148,7 @@ public class DependentController {
     }
 
     @GetMapping(
-            value = "/verifyDependentsCPFandEmergPhone/params",
+            value = "/commonuser/verifyDependentsCPFandEmergPhone/params",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML}
     )
     @Operation(summary = "Finds a CPF and Emergency Phone", description = "Finds a CPF and Emergency Phone",
@@ -159,6 +168,7 @@ public class DependentController {
     }
 
     @PostMapping(
+            value = "/commonuser/create",
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
     @Operation(summary = "Adds a new Dependent", description = "Adds a new Dependent by passing in a JSON, XML or YML representation of the Dependent!",
@@ -176,6 +186,7 @@ public class DependentController {
     }
 
     @PutMapping(
+            value = "/commonuser/update",
             consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
     @Operation(summary = "Updates a Dependent", description = "Updates a Dependent by passing in a JSON, XML or YML representation of the Dependent!",
@@ -193,7 +204,7 @@ public class DependentController {
         return service.update(dependentVO);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/commonuser/delete/{id}")
     @Operation(summary = "Deletes a Dependent", description = "Deletes a Dependent by passing in a JSON, XML or YML representation of the Dependent!",
             tags = {"Dependents"},
             responses = {

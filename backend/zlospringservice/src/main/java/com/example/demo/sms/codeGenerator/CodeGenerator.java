@@ -8,7 +8,7 @@ public class CodeGenerator {
         Random random = new Random();
 
         for (int i = 0; i < tamanho; i++) {
-            int digito = random.nextInt(10); // Gere um dígito aleatório de 0 a 9
+            int digito = random.nextInt(10);
             codigo.append(digito);
         }
 

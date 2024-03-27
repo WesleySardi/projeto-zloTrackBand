@@ -53,6 +53,21 @@ public class Responsible implements Serializable {
     public Responsible() {
     }
 
+    public Responsible(String cpfRes, String nomeRes, Integer idadeRes, String contato1Res, String contato2Res, String contato3Res, Integer planoAssinado, String emailRes, Integer enderecoIdRes, String rgRes, String senhaRes) {
+
+        this.cpfRes = cpfRes;
+        this.nomeRes = nomeRes;
+        this.idadeRes = idadeRes;
+        this.contato1Res = contato1Res;
+        this.contato2Res = contato2Res;
+        this.contato3Res = contato3Res;
+        this.planoAssinado = planoAssinado;
+        this.emailRes = emailRes;
+        this.enderecoIdRes = enderecoIdRes;
+        this.rgRes = rgRes;
+        this.senhaRes = senhaRes;
+    }
+
     public String getCpfRes() {
         return cpfRes;
     }
@@ -144,12 +159,13 @@ public class Responsible implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Responsible that)) return false;
-        return Objects.equals(getCpfRes(), that.getCpfRes()) && Objects.equals(getNomeRes(), that.getNomeRes()) && Objects.equals(getIdadeRes(), that.getIdadeRes()) && Objects.equals(getContato1Res(), that.getContato1Res()) && Objects.equals(getContato2Res(), that.getContato2Res()) && Objects.equals(getContato3Res(), that.getContato3Res()) && Objects.equals(getPlanoAssinado(), that.getPlanoAssinado()) && Objects.equals(getEmailRes(), that.getEmailRes()) && Objects.equals(getEnderecoIdRes(), that.getEnderecoIdRes()) && Objects.equals(getRgRes(), that.getRgRes()) && Objects.equals(getSenhaRes(), that.getSenhaRes());
+        if (o == null || getClass() != o.getClass()) return false;
+        Responsible that = (Responsible) o;
+        return Objects.equals(cpfRes, that.cpfRes) && Objects.equals(nomeRes, that.nomeRes) && Objects.equals(idadeRes, that.idadeRes) && Objects.equals(contato1Res, that.contato1Res) && Objects.equals(contato2Res, that.contato2Res) && Objects.equals(contato3Res, that.contato3Res) && Objects.equals(planoAssinado, that.planoAssinado) && Objects.equals(emailRes, that.emailRes) && Objects.equals(enderecoIdRes, that.enderecoIdRes) && Objects.equals(rgRes, that.rgRes) && Objects.equals(senhaRes, that.senhaRes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCpfRes(), getNomeRes(), getIdadeRes(), getContato1Res(), getContato2Res(), getContato3Res(), getPlanoAssinado(), getEmailRes(), getEnderecoIdRes(), getRgRes(), getSenhaRes());
+        return Objects.hash(cpfRes, nomeRes, idadeRes, contato1Res, contato2Res, contato3Res, planoAssinado, emailRes, enderecoIdRes, rgRes, senhaRes);
     }
 }

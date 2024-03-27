@@ -19,11 +19,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/smshandler/")
 @Tag(name = "SMS", description = "Endpoints for Managing SMS")
 public class SmsHandlerController {
+
+    private Logger logger = Logger.getLogger(SmsHandlerServices.class.getName());
 
     @Autowired
     private SmsHandlerServices service;

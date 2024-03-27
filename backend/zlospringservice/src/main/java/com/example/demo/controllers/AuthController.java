@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
+import com.example.demo.data.UserVO;
 import com.example.demo.data.security.AccountCredentialsVO;
+import com.example.demo.model.User;
 import com.example.demo.services.AuthServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,6 +19,15 @@ public class AuthController {
     @Autowired
     AuthServices authServices;
 
+    @Operation(summary = "Register a user")
+    @PostMapping(value = "/register")
+    public User register(@RequestBody User newUser) {
+
+        authServices.register(newUser);
+
+        return newUser;
+    }
+
     @SuppressWarnings("rawtypes")
     @Operation(summary = "Authenticates a user and returns a token")
     @PostMapping(value = "/signin")
@@ -31,7 +42,7 @@ public class AuthController {
 
     @SuppressWarnings("rawtypes")
     @Operation(summary = "Refresh token for authenticated user and returns a token")
-    @PutMapping(value = "/refresh/{username}")
+    @PutMapping(value = "/refreshToken/{username}")
     public ResponseEntity refreshToken(@PathVariable("username") String username, @RequestHeader("Authorization") String refreshToken) {
         if (checkIfParamsIsNotNull(username, refreshToken)) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client request!");
 

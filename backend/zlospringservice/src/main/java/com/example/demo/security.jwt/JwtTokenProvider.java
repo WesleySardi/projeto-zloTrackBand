@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.demo.data.security.TokenVO;
 import com.example.demo.exceptions.InvalidJwtAuthenticationException;
+import com.example.demo.services.UserServices;
 import com.twilio.rest.oauth.v1.Token;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class JwtTokenProvider {
@@ -52,7 +54,7 @@ public class JwtTokenProvider {
     }
 
     public TokenVO refreshToken(String refreshToken) {
-        if (refreshToken.contains("")) refreshToken = refreshToken.substring("Bearer ".length());
+        if (refreshToken.contains("Bearer ")) refreshToken = refreshToken.substring("Bearer ".length());
 
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT = verifier.verify(refreshToken);
